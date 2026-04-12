@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Heart, Phone, MessageCircle, Fuel, Gauge, Palette, Zap } from "lucide-react";
@@ -21,35 +22,39 @@ export function CarListingCard({ listing }: { listing: CarListing }) {
       )}
 
       {/* Photo */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-secondary">
-        <img
-          src={listing.photos[0]}
-          alt={`${listing.brand} ${listing.model} ${listing.year}`}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
-        {/* Photo count */}
-        <div className="absolute bottom-2 right-2 rounded bg-background/80 px-2 py-0.5 text-xs text-foreground backdrop-blur-sm">
-          📷 {listing.photos.length}
-        </div>
-        {/* Condition badge */}
-        <Badge variant={conditionVariant} className="absolute top-2 right-2">
-          {condition.label}
-        </Badge>
-        {/* Verified */}
-        {listing.isVerified && (
-          <Badge variant="verified" className="absolute top-2 left-2">
-            ✓ যাচাইকৃত
+      <Link to="/cars/$slug" params={{ slug: listing.slug }} className="block">
+        <div className="relative aspect-[16/10] overflow-hidden bg-secondary">
+          <img
+            src={listing.photos[0]}
+            alt={`${listing.brand} ${listing.model} ${listing.year}`}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          {/* Photo count */}
+          <div className="absolute bottom-2 right-2 rounded bg-background/80 px-2 py-0.5 text-xs text-foreground backdrop-blur-sm">
+            📷 {listing.photos.length}
+          </div>
+          {/* Condition badge */}
+          <Badge variant={conditionVariant} className="absolute top-2 right-2">
+            {condition.label}
           </Badge>
-        )}
-      </div>
+          {/* Verified */}
+          {listing.isVerified && (
+            <Badge variant="verified" className="absolute top-2 left-2">
+              ✓ যাচাইকৃত
+            </Badge>
+          )}
+        </div>
+      </Link>
 
       {/* Details */}
       <div className="p-4">
         {/* Title */}
-        <h3 className="font-display text-lg font-bold text-foreground">
-          {listing.brand} {listing.model}
-        </h3>
+        <Link to="/cars/$slug" params={{ slug: listing.slug }} className="hover:text-racing-red transition-colors">
+          <h3 className="font-display text-lg font-bold text-foreground">
+            {listing.brand} {listing.model}
+          </h3>
+        </Link>
         <p className="mt-0.5 text-sm text-muted-foreground font-bengali">
           {listing.year}
           {listing.grade && ` · গ্রেড ${listing.grade}`}
