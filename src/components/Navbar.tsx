@@ -72,7 +72,7 @@ export function Navbar() {
 
       {/* Mobile menu overlay */}
       {mobileOpen && (
-        <div className="fixed inset-0 top-16 z-[100] overflow-y-auto bg-background md:hidden">
+        <div className="fixed inset-x-0 top-16 bottom-0 z-[100] overflow-y-auto md:hidden" style={{ backgroundColor: '#0F0F12' }}>
           <div className="flex flex-col gap-2 p-6">
             {NAV_LINKS.map((link) => (
               <Link
