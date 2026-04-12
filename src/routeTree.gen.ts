@@ -9,8 +9,68 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ValuationRouteImport } from './routes/valuation'
+import { Route as SellRouteImport } from './routes/sell'
+import { Route as ReviewsRouteImport } from './routes/reviews'
+import { Route as ReconditionedRouteImport } from './routes/reconditioned'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as NewsRouteImport } from './routes/news'
+import { Route as GuidesRouteImport } from './routes/guides'
+import { Route as DealersRouteImport } from './routes/dealers'
+import { Route as CompareRouteImport } from './routes/compare'
+import { Route as CarsRouteImport } from './routes/cars'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ValuationRoute = ValuationRouteImport.update({
+  id: '/valuation',
+  path: '/valuation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SellRoute = SellRouteImport.update({
+  id: '/sell',
+  path: '/sell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewsRoute = ReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReconditionedRoute = ReconditionedRouteImport.update({
+  id: '/reconditioned',
+  path: '/reconditioned',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesRoute = GuidesRouteImport.update({
+  id: '/guides',
+  path: '/guides',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DealersRoute = DealersRouteImport.update({
+  id: '/dealers',
+  path: '/dealers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarsRoute = CarsRouteImport.update({
+  id: '/cars',
+  path: '/cars',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +79,172 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cars': typeof CarsRoute
+  '/compare': typeof CompareRoute
+  '/dealers': typeof DealersRoute
+  '/guides': typeof GuidesRoute
+  '/news': typeof NewsRoute
+  '/pricing': typeof PricingRoute
+  '/reconditioned': typeof ReconditionedRoute
+  '/reviews': typeof ReviewsRoute
+  '/sell': typeof SellRoute
+  '/valuation': typeof ValuationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cars': typeof CarsRoute
+  '/compare': typeof CompareRoute
+  '/dealers': typeof DealersRoute
+  '/guides': typeof GuidesRoute
+  '/news': typeof NewsRoute
+  '/pricing': typeof PricingRoute
+  '/reconditioned': typeof ReconditionedRoute
+  '/reviews': typeof ReviewsRoute
+  '/sell': typeof SellRoute
+  '/valuation': typeof ValuationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cars': typeof CarsRoute
+  '/compare': typeof CompareRoute
+  '/dealers': typeof DealersRoute
+  '/guides': typeof GuidesRoute
+  '/news': typeof NewsRoute
+  '/pricing': typeof PricingRoute
+  '/reconditioned': typeof ReconditionedRoute
+  '/reviews': typeof ReviewsRoute
+  '/sell': typeof SellRoute
+  '/valuation': typeof ValuationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/cars'
+    | '/compare'
+    | '/dealers'
+    | '/guides'
+    | '/news'
+    | '/pricing'
+    | '/reconditioned'
+    | '/reviews'
+    | '/sell'
+    | '/valuation'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/cars'
+    | '/compare'
+    | '/dealers'
+    | '/guides'
+    | '/news'
+    | '/pricing'
+    | '/reconditioned'
+    | '/reviews'
+    | '/sell'
+    | '/valuation'
+  id:
+    | '__root__'
+    | '/'
+    | '/cars'
+    | '/compare'
+    | '/dealers'
+    | '/guides'
+    | '/news'
+    | '/pricing'
+    | '/reconditioned'
+    | '/reviews'
+    | '/sell'
+    | '/valuation'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CarsRoute: typeof CarsRoute
+  CompareRoute: typeof CompareRoute
+  DealersRoute: typeof DealersRoute
+  GuidesRoute: typeof GuidesRoute
+  NewsRoute: typeof NewsRoute
+  PricingRoute: typeof PricingRoute
+  ReconditionedRoute: typeof ReconditionedRoute
+  ReviewsRoute: typeof ReviewsRoute
+  SellRoute: typeof SellRoute
+  ValuationRoute: typeof ValuationRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/valuation': {
+      id: '/valuation'
+      path: '/valuation'
+      fullPath: '/valuation'
+      preLoaderRoute: typeof ValuationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sell': {
+      id: '/sell'
+      path: '/sell'
+      fullPath: '/sell'
+      preLoaderRoute: typeof SellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reviews': {
+      id: '/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reconditioned': {
+      id: '/reconditioned'
+      path: '/reconditioned'
+      fullPath: '/reconditioned'
+      preLoaderRoute: typeof ReconditionedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides': {
+      id: '/guides'
+      path: '/guides'
+      fullPath: '/guides'
+      preLoaderRoute: typeof GuidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dealers': {
+      id: '/dealers'
+      path: '/dealers'
+      fullPath: '/dealers'
+      preLoaderRoute: typeof DealersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cars': {
+      id: '/cars'
+      path: '/cars'
+      fullPath: '/cars'
+      preLoaderRoute: typeof CarsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +257,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CarsRoute: CarsRoute,
+  CompareRoute: CompareRoute,
+  DealersRoute: DealersRoute,
+  GuidesRoute: GuidesRoute,
+  NewsRoute: NewsRoute,
+  PricingRoute: PricingRoute,
+  ReconditionedRoute: ReconditionedRoute,
+  ReviewsRoute: ReviewsRoute,
+  SellRoute: SellRoute,
+  ValuationRoute: ValuationRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
