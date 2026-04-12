@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Heart, Phone, MessageCircle, Fuel, Gauge, Palette, Zap } from "lucide-react";
