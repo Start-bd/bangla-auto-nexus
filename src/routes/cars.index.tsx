@@ -38,7 +38,7 @@ const carsSearchSchema = z.object({
   q: fallback(z.string(), "").default(""),
 });
 
-export const Route = createFileRoute("/cars")({
+export const Route = createFileRoute("/cars/")({
   validateSearch: zodValidator(carsSearchSchema),
   head: () => ({
     meta: [
