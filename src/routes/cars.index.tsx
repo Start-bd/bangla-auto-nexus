@@ -71,7 +71,7 @@ const SORT_OPTIONS = [
 
 function CarsPage() {
   const search = Route.useSearch();
-  const navigate = useNavigate({ from: "/cars" });
+  const navigate = useNavigate({ from: "/cars/" });
   const [mobileFilters, setMobileFilters] = useState(false);
 
   const updateSearch = (updates: Partial<z.infer<typeof carsSearchSchema>>) => {
