@@ -47,7 +47,7 @@ function mapDbToCarListing(row: Record<string, unknown>): CarListing {
 }
 
 export const fetchCarListings = createServerFn({ method: "GET" }).handler(async () => {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getServerSupabase()
     .from("car_listings")
     .select("*, dealers(name_bn)")
     .eq("is_sold", false)
@@ -69,7 +69,7 @@ export const fetchCarListings = createServerFn({ method: "GET" }).handler(async 
 export const fetchCarBySlug = createServerFn({ method: "GET" })
   .inputValidator((input: { slug: string }) => input)
   .handler(async ({ data: { slug } }) => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getServerSupabase()
       .from("car_listings")
       .select("*, dealers(name_bn)")
       .eq("slug", slug)
@@ -87,7 +87,7 @@ export const fetchCarBySlug = createServerFn({ method: "GET" })
 export const fetchSimilarCars = createServerFn({ method: "GET" })
   .inputValidator((input: { brand: string; priceBdt: number; excludeId: string }) => input)
   .handler(async ({ data: { brand, priceBdt, excludeId } }) => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getServerSupabase()
       .from("car_listings")
       .select("*, dealers(name_bn)")
       .eq("is_sold", false)
