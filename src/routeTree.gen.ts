@@ -18,6 +18,7 @@ import { Route as NewsRouteImport } from './routes/news'
 import { Route as GuidesRouteImport } from './routes/guides'
 import { Route as DealersRouteImport } from './routes/dealers'
 import { Route as CompareRouteImport } from './routes/compare'
+import { Route as CarsRouteImport } from './routes/cars'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CarsIndexRouteImport } from './routes/cars.index'
 import { Route as CarsSlugRouteImport } from './routes/cars.$slug'
@@ -67,15 +68,20 @@ const CompareRoute = CompareRouteImport.update({
   path: '/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CarsRoute = CarsRouteImport.update({
+  id: '/cars',
+  path: '/cars',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CarsIndexRoute = CarsIndexRouteImport.update({
-  id: '/cars/',
-  path: '/cars/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => CarsRoute,
 } as any)
 const CarsSlugRoute = CarsSlugRouteImport.update({
   id: '/$slug',
@@ -85,6 +91,7 @@ const CarsSlugRoute = CarsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cars': typeof CarsRouteWithChildren
   '/compare': typeof CompareRoute
   '/dealers': typeof DealersRoute
   '/guides': typeof GuidesRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cars': typeof CarsRouteWithChildren
   '/compare': typeof CompareRoute
   '/dealers': typeof DealersRoute
   '/guides': typeof GuidesRoute
@@ -130,6 +138,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/cars'
     | '/compare'
     | '/dealers'
     | '/guides'
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/cars'
     | '/compare'
     | '/dealers'
     | '/guides'
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CarsRoute: typeof CarsRouteWithChildren
   CompareRoute: typeof CompareRoute
   DealersRoute: typeof DealersRoute
   GuidesRoute: typeof GuidesRoute
@@ -182,7 +193,6 @@ export interface RootRouteChildren {
   ReviewsRoute: typeof ReviewsRoute
   SellRoute: typeof SellRoute
   ValuationRoute: typeof ValuationRoute
-  CarsIndexRoute: typeof CarsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -250,6 +260,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cars': {
+      id: '/cars'
+      path: '/cars'
+      fullPath: '/cars'
+      preLoaderRoute: typeof CarsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -259,10 +276,10 @@ declare module '@tanstack/react-router' {
     }
     '/cars/': {
       id: '/cars/'
-      path: '/cars'
+      path: '/'
       fullPath: '/cars/'
       preLoaderRoute: typeof CarsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof CarsRoute
     }
     '/cars/$slug': {
       id: '/cars/$slug'
@@ -274,8 +291,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface CarsRouteChildren {
+  CarsSlugRoute: typeof CarsSlugRoute
+  CarsIndexRoute: typeof CarsIndexRoute
+}
+
+const CarsRouteChildren: CarsRouteChildren = {
+  CarsSlugRoute: CarsSlugRoute,
+  CarsIndexRoute: CarsIndexRoute,
+}
+
+const CarsRouteWithChildren = CarsRoute._addFileChildren(CarsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CarsRoute: CarsRouteWithChildren,
   CompareRoute: CompareRoute,
   DealersRoute: DealersRoute,
   GuidesRoute: GuidesRoute,
@@ -285,7 +315,6 @@ const rootRouteChildren: RootRouteChildren = {
   ReviewsRoute: ReviewsRoute,
   SellRoute: SellRoute,
   ValuationRoute: ValuationRoute,
-  CarsIndexRoute: CarsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
