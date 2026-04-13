@@ -73,12 +73,22 @@ export const BD_DISTRICTS = [
   "কুমিল্লা", "কক্সবাজার",
 ];
 
-const carPhotos = [
-  "https://images.unsplash.com/photo-1549317661-bd32c8ce0afa?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&h=400&fit=crop",
-];
+const STORAGE_BASE = "https://zgslkpvwaztjanknhcig.supabase.co/storage/v1/object/public/car-photos";
+
+const carPhotos: Record<string, string[]> = {
+  "toyota-aqua": [`${STORAGE_BASE}/toyota-aqua-white.jpg`],
+  "honda-vezel": [`${STORAGE_BASE}/honda-vezel-black.jpg`],
+  "suzuki-swift": [`${STORAGE_BASE}/suzuki-swift-red.jpg`],
+  "toyota-axio": [`${STORAGE_BASE}/toyota-axio-silver.jpg`],
+  "honda-fit": [`${STORAGE_BASE}/honda-fit-blue.jpg`],
+  "nissan-note": [`${STORAGE_BASE}/nissan-note-white.jpg`],
+  "toyota-prius": [`${STORAGE_BASE}/toyota-prius-white.jpg`],
+  "bmw-3series": [`${STORAGE_BASE}/bmw-3series-black.jpg`],
+  "honda-grace": [`${STORAGE_BASE}/honda-grace-white.jpg`],
+  "mitsubishi-outlander": [`${STORAGE_BASE}/mitsubishi-outlander-white.jpg`],
+};
+
+const defaultPhotos = [`${STORAGE_BASE}/toyota-aqua-white.jpg`];
 
 export const MOCK_LISTINGS: CarListing[] = [
   {
