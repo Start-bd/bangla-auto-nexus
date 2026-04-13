@@ -75,7 +75,7 @@ function CarsPage() {
   const [mobileFilters, setMobileFilters] = useState(false);
 
   const updateSearch = (updates: Partial<z.infer<typeof carsSearchSchema>>) => {
-    navigate({ search: (prev) => ({ ...prev, ...updates }) });
+    navigate({ search: (prev: Record<string, unknown>) => ({ ...prev, ...updates }) });
   };
 
   const activeFilterCount = [
