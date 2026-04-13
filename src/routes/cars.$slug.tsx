@@ -92,21 +92,12 @@ function CarDetailPage() {
         ? "brandNew"
         : "used";
 
-  const similarCars = useMemo(() => {
-    return MOCK_LISTINGS.filter(
-      (c) =>
-        c.id !== listing.id &&
-        (c.brand === listing.brand ||
-          Math.abs(c.priceBdt - listing.priceBdt) < 500000)
-    ).slice(0, 6);
-  }, [listing]);
-
   const sellerOtherCars = useMemo(() => {
-    if (listing.sellerType !== "dealer" || !listing.dealerName) return [];
-    return MOCK_LISTINGS.filter(
-      (c) => c.id !== listing.id && c.dealerName === listing.dealerName
+    if (listing.sellerType !== "dealer" || !listing.dealerName) return [] as CarListing[];
+    return similarCars.filter(
+      (c: CarListing) => c.dealerName === listing.dealerName
     ).slice(0, 4);
-  }, [listing]);
+  }, [listing, similarCars]);
 
   const nextPhoto = () =>
     setCurrentPhoto((p) => (p + 1) % listing.photos.length);
