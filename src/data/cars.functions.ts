@@ -1,5 +1,17 @@
 import { createServerFn } from "@tanstack/react-start";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "@/integrations/supabase/types";
+
+function getServerSupabase() {
+  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const key = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) {
+    throw new Error("Missing Supabase environment variables on the server.");
+  }
+  return createClient<Database>(url, key, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+}
 import type { CarListing } from "@/data/mock-data";
 
 function mapDbToCarListing(row: Record<string, unknown>): CarListing {
