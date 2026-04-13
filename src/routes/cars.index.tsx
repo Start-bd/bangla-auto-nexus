@@ -5,11 +5,11 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { CarListingCard } from "@/components/CarListingCard";
 import {
-  MOCK_LISTINGS,
   CAR_BRANDS,
   BD_DISTRICTS,
   PRICE_RANGES,
 } from "@/data/mock-data";
+import { fetchCarListings } from "@/data/cars.functions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
