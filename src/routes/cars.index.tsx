@@ -5,11 +5,11 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { CarListingCard } from "@/components/CarListingCard";
 import {
-  MOCK_LISTINGS,
   CAR_BRANDS,
   BD_DISTRICTS,
   PRICE_RANGES,
 } from "@/data/mock-data";
+import { fetchCarListings } from "@/data/cars.functions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -40,6 +40,7 @@ const carsSearchSchema = z.object({
 
 export const Route = createFileRoute("/cars/")({
   validateSearch: zodValidator(carsSearchSchema),
+  loader: () => fetchCarListings(),
   head: () => ({
     meta: [
       { title: "গাড়ির বাজার — Bangla Autos | গাড়ি কিনুন" },
@@ -71,6 +72,7 @@ const SORT_OPTIONS = [
 
 function CarsPage() {
   const search = Route.useSearch();
+  const allListings = Route.useLoaderData();
   const navigate = useNavigate({ from: "/cars/" });
   const [mobileFilters, setMobileFilters] = useState(false);
 
@@ -105,7 +107,7 @@ function CarsPage() {
   };
 
   const filtered = useMemo(() => {
-    let results = [...MOCK_LISTINGS];
+    let results = [...allListings];
 
     if (search.q) {
       const q = search.q.toLowerCase();

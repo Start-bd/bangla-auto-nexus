@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
-import { MOCK_LISTINGS, formatPriceRaw, getConditionLabel } from "@/data/mock-data";
+import { formatPriceRaw, getConditionLabel } from "@/data/mock-data";
 import type { CarListing } from "@/data/mock-data";
+import { fetchCarBySlug, fetchSimilarCars } from "@/data/cars.functions";
 import { CarListingCard } from "@/components/CarListingCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,10 +35,11 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/cars/$slug")({
-  loader: ({ params }) => {
-    const listing = MOCK_LISTINGS.find((l) => l.slug === params.slug);
+  loader: async ({ params }) => {
+    const listing = await fetchCarBySlug({ data: { slug: params.slug } });
     if (!listing) throw notFound();
-    return { listing };
+    const similarCars = await fetchSimilarCars({ data: { brand: listing.brand, priceBdt: listing.priceBdt, excludeId: listing.id } });
+    return { listing, similarCars };
   },
   head: ({ loaderData }) => {
     const l = loaderData?.listing;
@@ -76,7 +78,7 @@ export const Route = createFileRoute("/cars/$slug")({
 });
 
 function CarDetailPage() {
-  const { listing } = Route.useLoaderData();
+  const { listing, similarCars } = Route.useLoaderData();
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [phoneRevealed, setPhoneRevealed] = useState(false);
   const [showEmi, setShowEmi] = useState(false);
@@ -90,21 +92,12 @@ function CarDetailPage() {
         ? "brandNew"
         : "used";
 
-  const similarCars = useMemo(() => {
-    return MOCK_LISTINGS.filter(
-      (c) =>
-        c.id !== listing.id &&
-        (c.brand === listing.brand ||
-          Math.abs(c.priceBdt - listing.priceBdt) < 500000)
-    ).slice(0, 6);
-  }, [listing]);
-
   const sellerOtherCars = useMemo(() => {
-    if (listing.sellerType !== "dealer" || !listing.dealerName) return [];
-    return MOCK_LISTINGS.filter(
-      (c) => c.id !== listing.id && c.dealerName === listing.dealerName
+    if (listing.sellerType !== "dealer" || !listing.dealerName) return [] as CarListing[];
+    return similarCars.filter(
+      (c: CarListing) => c.dealerName === listing.dealerName
     ).slice(0, 4);
-  }, [listing]);
+  }, [listing, similarCars]);
 
   const nextPhoto = () =>
     setCurrentPhoto((p) => (p + 1) % listing.photos.length);
