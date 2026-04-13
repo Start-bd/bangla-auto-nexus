@@ -20,6 +20,7 @@ import { Route as DealersRouteImport } from './routes/dealers'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as CarsRouteImport } from './routes/cars'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CarsIndexRouteImport } from './routes/cars.index'
 import { Route as CarsSlugRouteImport } from './routes/cars.$slug'
 
 const ValuationRoute = ValuationRouteImport.update({
@@ -77,6 +78,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CarsIndexRoute = CarsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CarsRoute,
+} as any)
 const CarsSlugRoute = CarsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -96,10 +102,10 @@ export interface FileRoutesByFullPath {
   '/sell': typeof SellRoute
   '/valuation': typeof ValuationRoute
   '/cars/$slug': typeof CarsSlugRoute
+  '/cars/': typeof CarsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/cars': typeof CarsRouteWithChildren
   '/compare': typeof CompareRoute
   '/dealers': typeof DealersRoute
   '/guides': typeof GuidesRoute
@@ -110,6 +116,7 @@ export interface FileRoutesByTo {
   '/sell': typeof SellRoute
   '/valuation': typeof ValuationRoute
   '/cars/$slug': typeof CarsSlugRoute
+  '/cars': typeof CarsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -125,6 +132,7 @@ export interface FileRoutesById {
   '/sell': typeof SellRoute
   '/valuation': typeof ValuationRoute
   '/cars/$slug': typeof CarsSlugRoute
+  '/cars/': typeof CarsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,10 +149,10 @@ export interface FileRouteTypes {
     | '/sell'
     | '/valuation'
     | '/cars/$slug'
+    | '/cars/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/cars'
     | '/compare'
     | '/dealers'
     | '/guides'
@@ -155,6 +163,7 @@ export interface FileRouteTypes {
     | '/sell'
     | '/valuation'
     | '/cars/$slug'
+    | '/cars'
   id:
     | '__root__'
     | '/'
@@ -169,6 +178,7 @@ export interface FileRouteTypes {
     | '/sell'
     | '/valuation'
     | '/cars/$slug'
+    | '/cars/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -264,6 +274,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cars/': {
+      id: '/cars/'
+      path: '/'
+      fullPath: '/cars/'
+      preLoaderRoute: typeof CarsIndexRouteImport
+      parentRoute: typeof CarsRoute
+    }
     '/cars/$slug': {
       id: '/cars/$slug'
       path: '/$slug'
@@ -276,10 +293,12 @@ declare module '@tanstack/react-router' {
 
 interface CarsRouteChildren {
   CarsSlugRoute: typeof CarsSlugRoute
+  CarsIndexRoute: typeof CarsIndexRoute
 }
 
 const CarsRouteChildren: CarsRouteChildren = {
   CarsSlugRoute: CarsSlugRoute,
+  CarsIndexRoute: CarsIndexRoute,
 }
 
 const CarsRouteWithChildren = CarsRoute._addFileChildren(CarsRouteChildren)
