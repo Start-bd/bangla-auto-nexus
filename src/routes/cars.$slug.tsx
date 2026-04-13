@@ -35,10 +35,11 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/cars/$slug")({
-  loader: ({ params }) => {
-    const listing = MOCK_LISTINGS.find((l) => l.slug === params.slug);
+  loader: async ({ params }) => {
+    const listing = await fetchCarBySlug({ data: { slug: params.slug } });
     if (!listing) throw notFound();
-    return { listing };
+    const similarCars = await fetchSimilarCars({ data: { brand: listing.brand, priceBdt: listing.priceBdt, excludeId: listing.id } });
+    return { listing, similarCars };
   },
   head: ({ loaderData }) => {
     const l = loaderData?.listing;
