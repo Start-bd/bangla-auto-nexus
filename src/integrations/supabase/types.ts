@@ -14,16 +14,292 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      car_listings: {
+        Row: {
+          auction_sheet_url: string | null
+          brand: string
+          color: string | null
+          color_bn: string | null
+          condition: Database["public"]["Enums"]["listing_condition"]
+          created_at: string
+          dealer_id: string | null
+          description: string | null
+          description_bn: string | null
+          district: string
+          engine_cc: number | null
+          expires_at: string | null
+          features: string[] | null
+          fuel_type: string | null
+          grade: string | null
+          id: string
+          is_sold: boolean
+          is_verified: boolean
+          listing_tier: Database["public"]["Enums"]["listing_tier"]
+          model: string
+          odometer_km: number | null
+          origin_country: string | null
+          photos: string[] | null
+          price_bdt: number
+          price_negotiable: boolean
+          seller_phone: string | null
+          seller_type: string
+          seller_user_id: string
+          slug: string
+          transmission: string | null
+          updated_at: string
+          views_count: number
+          year: number
+        }
+        Insert: {
+          auction_sheet_url?: string | null
+          brand: string
+          color?: string | null
+          color_bn?: string | null
+          condition?: Database["public"]["Enums"]["listing_condition"]
+          created_at?: string
+          dealer_id?: string | null
+          description?: string | null
+          description_bn?: string | null
+          district: string
+          engine_cc?: number | null
+          expires_at?: string | null
+          features?: string[] | null
+          fuel_type?: string | null
+          grade?: string | null
+          id?: string
+          is_sold?: boolean
+          is_verified?: boolean
+          listing_tier?: Database["public"]["Enums"]["listing_tier"]
+          model: string
+          odometer_km?: number | null
+          origin_country?: string | null
+          photos?: string[] | null
+          price_bdt: number
+          price_negotiable?: boolean
+          seller_phone?: string | null
+          seller_type?: string
+          seller_user_id: string
+          slug: string
+          transmission?: string | null
+          updated_at?: string
+          views_count?: number
+          year: number
+        }
+        Update: {
+          auction_sheet_url?: string | null
+          brand?: string
+          color?: string | null
+          color_bn?: string | null
+          condition?: Database["public"]["Enums"]["listing_condition"]
+          created_at?: string
+          dealer_id?: string | null
+          description?: string | null
+          description_bn?: string | null
+          district?: string
+          engine_cc?: number | null
+          expires_at?: string | null
+          features?: string[] | null
+          fuel_type?: string | null
+          grade?: string | null
+          id?: string
+          is_sold?: boolean
+          is_verified?: boolean
+          listing_tier?: Database["public"]["Enums"]["listing_tier"]
+          model?: string
+          odometer_km?: number | null
+          origin_country?: string | null
+          photos?: string[] | null
+          price_bdt?: number
+          price_negotiable?: boolean
+          seller_phone?: string | null
+          seller_type?: string
+          seller_user_id?: string
+          slug?: string
+          transmission?: string | null
+          updated_at?: string
+          views_count?: number
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "car_listings_dealer_id_fkey"
+            columns: ["dealer_id"]
+            isOneToOne: false
+            referencedRelation: "dealers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dealers: {
+        Row: {
+          address: string | null
+          created_at: string
+          description: string | null
+          description_bn: string | null
+          district: string
+          email: string | null
+          id: string
+          is_verified: boolean
+          listing_limit: number
+          logo_url: string | null
+          name: string
+          name_bn: string | null
+          owner_user_id: string | null
+          phone: string | null
+          slug: string
+          subscription_tier: Database["public"]["Enums"]["dealer_subscription"]
+          updated_at: string
+          website: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          description?: string | null
+          description_bn?: string | null
+          district: string
+          email?: string | null
+          id?: string
+          is_verified?: boolean
+          listing_limit?: number
+          logo_url?: string | null
+          name: string
+          name_bn?: string | null
+          owner_user_id?: string | null
+          phone?: string | null
+          slug: string
+          subscription_tier?: Database["public"]["Enums"]["dealer_subscription"]
+          updated_at?: string
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          description?: string | null
+          description_bn?: string | null
+          district?: string
+          email?: string | null
+          id?: string
+          is_verified?: boolean
+          listing_limit?: number
+          logo_url?: string | null
+          name?: string
+          name_bn?: string | null
+          owner_user_id?: string | null
+          phone?: string | null
+          slug?: string
+          subscription_tier?: Database["public"]["Enums"]["dealer_subscription"]
+          updated_at?: string
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      favorites: {
+        Row: {
+          created_at: string
+          id: string
+          listing_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          listing_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          listing_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "car_listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          district: string | null
+          id: string
+          phone: string | null
+          preferred_language: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          district?: string | null
+          id?: string
+          phone?: string | null
+          preferred_language?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          district?: string | null
+          id?: string
+          phone?: string | null
+          preferred_language?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
+      dealer_subscription: "free" | "basic" | "premium" | "enterprise"
+      listing_condition: "new" | "used" | "reconditioned"
+      listing_tier: "free" | "premium" | "featured"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +426,11 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+      dealer_subscription: ["free", "basic", "premium", "enterprise"],
+      listing_condition: ["new", "used", "reconditioned"],
+      listing_tier: ["free", "premium", "featured"],
+    },
   },
 } as const
