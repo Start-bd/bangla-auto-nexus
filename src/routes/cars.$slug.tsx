@@ -291,7 +291,7 @@ function CarDetailPage() {
                 {listing.dealerName}-এর আরও গাড়ি
               </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {sellerOtherCars.map((car) => (
+                {sellerOtherCars.map((car: CarListing) => (
                   <CarListingCard key={car.id} listing={car} />
                 ))}
               </div>
@@ -305,7 +305,7 @@ function CarDetailPage() {
                 একই বাজেটে অন্য গাড়ি
               </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {similarCars.map((car) => (
+                {similarCars.map((car: CarListing) => (
                   <CarListingCard key={car.id} listing={car} />
                 ))}
               </div>
