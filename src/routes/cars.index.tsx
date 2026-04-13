@@ -107,7 +107,7 @@ function CarsPage() {
   };
 
   const filtered = useMemo(() => {
-    let results = [...MOCK_LISTINGS];
+    let results = [...allListings];
 
     if (search.q) {
       const q = search.q.toLowerCase();
