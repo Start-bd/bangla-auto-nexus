@@ -1,5 +1,17 @@
 import { createServerFn } from "@tanstack/react-start";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "@/integrations/supabase/types";
+
+function getServerSupabase() {
+  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const key = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) {
+    throw new Error("Missing Supabase environment variables on the server.");
+  }
+  return createClient<Database>(url, key, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+}
 import type { CarListing } from "@/data/mock-data";
 
 function mapDbToCarListing(row: Record<string, unknown>): CarListing {
@@ -35,7 +47,7 @@ function mapDbToCarListing(row: Record<string, unknown>): CarListing {
 }
 
 export const fetchCarListings = createServerFn({ method: "GET" }).handler(async () => {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getServerSupabase()
     .from("car_listings")
     .select("*, dealers(name_bn)")
     .eq("is_sold", false)
@@ -57,7 +69,7 @@ export const fetchCarListings = createServerFn({ method: "GET" }).handler(async 
 export const fetchCarBySlug = createServerFn({ method: "GET" })
   .inputValidator((input: { slug: string }) => input)
   .handler(async ({ data: { slug } }) => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getServerSupabase()
       .from("car_listings")
       .select("*, dealers(name_bn)")
       .eq("slug", slug)
@@ -75,7 +87,7 @@ export const fetchCarBySlug = createServerFn({ method: "GET" })
 export const fetchSimilarCars = createServerFn({ method: "GET" })
   .inputValidator((input: { brand: string; priceBdt: number; excludeId: string }) => input)
   .handler(async ({ data: { brand, priceBdt, excludeId } }) => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getServerSupabase()
       .from("car_listings")
       .select("*, dealers(name_bn)")
       .eq("is_sold", false)
