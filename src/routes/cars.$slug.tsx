@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
-import { MOCK_LISTINGS, formatPriceRaw, getConditionLabel } from "@/data/mock-data";
+import { formatPriceRaw, getConditionLabel } from "@/data/mock-data";
 import type { CarListing } from "@/data/mock-data";
+import { fetchCarBySlug, fetchSimilarCars } from "@/data/cars.functions";
 import { CarListingCard } from "@/components/CarListingCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
