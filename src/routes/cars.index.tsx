@@ -72,6 +72,7 @@ const SORT_OPTIONS = [
 
 function CarsPage() {
   const search = Route.useSearch();
+  const allListings = Route.useLoaderData();
   const navigate = useNavigate({ from: "/cars/" });
   const [mobileFilters, setMobileFilters] = useState(false);
 
