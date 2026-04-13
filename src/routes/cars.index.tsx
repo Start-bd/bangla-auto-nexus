@@ -40,6 +40,7 @@ const carsSearchSchema = z.object({
 
 export const Route = createFileRoute("/cars/")({
   validateSearch: zodValidator(carsSearchSchema),
+  loader: () => fetchCarListings(),
   head: () => ({
     meta: [
       { title: "গাড়ির বাজার — Bangla Autos | গাড়ি কিনুন" },
