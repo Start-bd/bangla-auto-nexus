@@ -78,7 +78,7 @@ export const Route = createFileRoute("/cars/$slug")({
 });
 
 function CarDetailPage() {
-  const { listing } = Route.useLoaderData();
+  const { listing, similarCars } = Route.useLoaderData();
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [phoneRevealed, setPhoneRevealed] = useState(false);
   const [showEmi, setShowEmi] = useState(false);
