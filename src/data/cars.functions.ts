@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
+import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
 
 function getServerSupabase() {
@@ -84,18 +85,47 @@ export const fetchCarBySlug = createServerFn({ method: "GET" })
     return mapDbToCarListing(mapped);
   });
 
+const similarCarsInput = z.object({
+  brand: z.string().min(1).max(100).regex(/^[a-zA-Z0-9\s\-]+$/),
+  priceBdt: z.number().min(0).max(999999999),
+  excludeId: z.string().uuid(),
+});
+
 export const fetchSimilarCars = createServerFn({ method: "GET" })
-  .inputValidator((input: { brand: string; priceBdt: number; excludeId: string }) => input)
+  .inputValidator((input: { brand: string; priceBdt: number; excludeId: string }) => similarCarsInput.parse(input))
   .handler(async ({ data: { brand, priceBdt, excludeId } }) => {
-    const { data, error } = await getServerSupabase()
+    const supabase = getServerSupabase();
+
+    // Fetch by brand
+    const { data: brandMatches } = await supabase
       .from("car_listings")
       .select("*, dealers(name_bn)")
       .eq("is_sold", false)
       .neq("id", excludeId)
-      .or(`brand.eq.${brand},and(price_bdt.gte.${priceBdt - 500000},price_bdt.lte.${priceBdt + 500000})`)
+      .eq("brand", brand)
       .limit(6);
 
-    if (error || !data) return [] as CarListing[];
+    // Fetch by price range
+    const { data: priceMatches } = await supabase
+      .from("car_listings")
+      .select("*, dealers(name_bn)")
+      .eq("is_sold", false)
+      .neq("id", excludeId)
+      .gte("price_bdt", priceBdt - 500000)
+      .lte("price_bdt", priceBdt + 500000)
+      .limit(6);
+
+    // Merge and deduplicate
+    const allMatches = [...(brandMatches || []), ...(priceMatches || [])];
+    const seen = new Set<string>();
+    const data = allMatches.filter((r) => {
+      const id = (r as Record<string, unknown>).id as string;
+      if (seen.has(id)) return false;
+      seen.add(id);
+      return true;
+    }).slice(0, 6);
+
+    if (!data || data.length === 0) return [] as CarListing[];
 
     return (data || []).map((row: Record<string, unknown>) => {
       const dealers = row.dealers as Record<string, unknown> | null;
