@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { formatPriceRaw, getConditionLabel } from "@/data/mock-data";
 import type { CarListing } from "@/data/mock-data";
