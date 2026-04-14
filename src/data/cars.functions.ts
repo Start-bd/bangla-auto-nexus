@@ -125,7 +125,7 @@ export const fetchSimilarCars = createServerFn({ method: "GET" })
       return true;
     }).slice(0, 6);
 
-    if (error || !data) return [] as CarListing[];
+    if (!data || data.length === 0) return [] as CarListing[];
 
     return (data || []).map((row: Record<string, unknown>) => {
       const dealers = row.dealers as Record<string, unknown> | null;
