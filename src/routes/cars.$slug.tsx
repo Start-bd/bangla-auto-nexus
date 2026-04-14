@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { formatPriceRaw, getConditionLabel } from "@/data/mock-data";
 import type { CarListing } from "@/data/mock-data";
@@ -59,6 +59,19 @@ export const Route = createFileRoute("/cars/$slug")({
     };
   },
   component: CarDetailPage,
+  errorComponent: () => {
+    const router = useRouter();
+    return (
+      <div className="flex min-h-[60vh] flex-col items-center justify-center text-center px-4">
+        <AlertTriangle size={48} className="mb-4 text-muted-foreground/40" />
+        <h1 className="font-display text-2xl font-bold text-foreground">সমস্যা হয়েছে</h1>
+        <p className="mt-2 text-sm text-muted-foreground font-bengali">গাড়ির তথ্য লোড করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।</p>
+        <Button variant="racing" size="sm" className="mt-4 font-bengali" onClick={() => router.invalidate()}>
+          আবার চেষ্টা করুন
+        </Button>
+      </div>
+    );
+  },
   notFoundComponent: () => (
     <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
       <AlertTriangle size={48} className="mb-4 text-muted-foreground/40" />
