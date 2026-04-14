@@ -6,11 +6,12 @@ import { BrandDirectory } from "@/components/BrandDirectory";
 import { PriceRangeBrowse } from "@/components/PriceRangeBrowse";
 import { ReconditionedPromo } from "@/components/ReconditionedPromo";
 import { SellCTA } from "@/components/SellCTA";
-import { MOCK_LISTINGS } from "@/data/mock-data";
+import { fetchCarListings } from "@/data/cars.functions";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
+  loader: () => fetchCarListings(),
   head: () => ({
     meta: [
       { title: "Bangla Autos — বাংলাদেশের সেরা গাড়ির বাজার | গাড়ি কিনুন ও বেচুন" },
@@ -23,8 +24,9 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const featured = MOCK_LISTINGS.filter((l) => l.listingTier === "featured");
-  const recent = MOCK_LISTINGS.filter((l) => l.listingTier !== "featured").slice(0, 6);
+  const allListings = Route.useLoaderData();
+  const featured = allListings.filter((l) => l.listingTier === "featured");
+  const recent = allListings.filter((l) => l.listingTier !== "featured").slice(0, 6);
 
   return (
     <>
