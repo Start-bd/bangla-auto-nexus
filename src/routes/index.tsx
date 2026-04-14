@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import type { CarListing } from "@/data/mock-data";
 import { HeroSection } from "@/components/HeroSection";
 import { StatsCounter } from "@/components/StatsCounter";
 import { CarListingCard } from "@/components/CarListingCard";

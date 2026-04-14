@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { useState, useMemo } from "react";
@@ -53,7 +53,7 @@ export const Route = createFileRoute("/cars/")({
   }),
   component: CarsPage,
   errorComponent: ({ error }) => {
-    const router = __import_useRouter();
+    const router = useRouter();
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center text-center px-4">
         <Car size={48} className="mb-4 text-muted-foreground/40" />
