@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bangla-auto-nexus.lovable.app/sitemap.xml
+Sitemap: https://bangla.autos/sitemap.xml
