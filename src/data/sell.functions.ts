@@ -23,6 +23,18 @@ const createListingSchema = z.object({
   photos: z.array(z.string().url().max(500)).min(1).max(10),
   sellerPhone: z.string().min(10).max(20).optional(),
   originCountry: z.string().max(50).optional(),
+}).superRefine((val, ctx) => {
+  const projectId = process.env.SUPABASE_PROJECT_ID || process.env.VITE_SUPABASE_PROJECT_ID || "zgslkpvwaztjanknhcig";
+  const allowedPrefix = `https://${projectId}.supabase.co/storage/v1/object/public/car-photos/`;
+  val.photos.forEach((url, i) => {
+    if (!url.startsWith(allowedPrefix)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["photos", i],
+        message: "Photo URL must be uploaded to this site's storage.",
+      });
+    }
+  });
 });
 
 export const createCarListing = createServerFn({ method: "POST" })
