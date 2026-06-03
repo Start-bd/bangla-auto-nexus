@@ -26,8 +26,8 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const allListings = Route.useLoaderData();
-  const featured = allListings.filter((l) => l.listingTier === "featured");
-  const recent = allListings.filter((l) => l.listingTier !== "featured").slice(0, 6);
+  const featured = allListings.filter((l: CarListing) => l.listingTier === "featured");
+  const recent = allListings.filter((l: CarListing) => l.listingTier !== "featured").slice(0, 6);
 
   return (
     <>
@@ -46,7 +46,7 @@ function HomePage() {
             </div>
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((listing) => (
+            {featured.map((listing: CarListing) => (
               <CarListingCard key={listing.id} listing={listing} />
             ))}
           </div>
@@ -71,7 +71,7 @@ function HomePage() {
             </Link>
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {recent.map((listing) => (
+            {recent.map((listing: CarListing) => (
               <CarListingCard key={listing.id} listing={listing} />
             ))}
           </div>
