@@ -1,0 +1,19 @@
+# Bangla Autos
+
+> Bangladesh's leading Bengali-language automotive marketplace for buying, selling, valuing, and researching cars — with a focus on reconditioned Japanese imports, used local cars, and brand-new vehicles.
+
+Bangla Autos helps Bangladeshi buyers, sellers, and dealers transact with confidence. The platform combines verified listings, AI-powered price valuation, in-depth reviews and buying guides, a dealer directory, and the latest automotive news — all available in Bengali and English.
+
+## Pages
+
+- [Home](/): Featured listings, brand directory, and price-range browsing.
+- [Cars marketplace](/cars): Search and filter all available listings by brand, condition, price, district, and fuel type.
+- [Reconditioned cars](/reconditioned): Reconditioned Japanese imports with auction-grade information.
+- [Sell your car](/sell): Free classified listings for private sellers and dealers.
+- [Compare cars](/compare): Side-by-side specification and price comparison.
+- [AI valuation](/valuation): Estimate the fair market value of any car in Bangladesh.
+- [Verified dealers](/dealers): Directory of trusted automotive dealers across Bangladesh.
+- [Reviews](/reviews): Hands-on car reviews and ratings.
+- [Buying guides](/guides): Pre-purchase checklists, financing, registration, and import guides.
+- [Auto news](/news): Latest automotive news, import policy updates, and fuel prices.
+- [Pricing](/pricing): Dealer subscription plans and featured-listing pricing.

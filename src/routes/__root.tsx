@@ -37,13 +37,22 @@ export const Route = createRootRoute({
       { name: "description", content: "বাংলাদেশে গাড়ি কিনুন বা বেচুন। রিকন্ডিশন্ড, নতুন এবং ব্যবহৃত গাড়ি — সম্পূর্ণ বাংলায়।" },
       { name: "author", content: "Bangla Autos" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { property: "og:title", content: "Bangla Autos — বাংলাদেশের সেরা গাড়ির বাজার" },
-      { name: "twitter:title", content: "Bangla Autos — বাংলাদেশের সেরা গাড়ির বাজার" },
-      { property: "og:description", content: "বাংলাদেশে গাড়ি কিনুন বা বেচুন। রিকন্ডিশন্ড, নতুন এবং ব্যবহৃত গাড়ি — সম্পূর্ণ বাংলায়।" },
-      { name: "twitter:description", content: "বাংলাদেশে গাড়ি কিনুন বা বেচুন। রিকন্ডিশন্ড, নতুন এবং ব্যবহৃত গাড়ি — সম্পূর্ণ বাংলায়।" },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/4kGxjgvSCXX46H8lfdWeK31NoCz1/social-images/social-1776173934349-dadda.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/4kGxjgvSCXX46H8lfdWeK31NoCz1/social-images/social-1776173934349-dadda.webp" },
+      { property: "og:site_name", content: "Bangla Autos" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Bangla Autos",
+          url: "https://bangla.autos",
+          logo: "https://bangla.autos/favicon.ico",
+          description:
+            "Bangladesh's leading Bengali-language automotive marketplace for buying, selling, and valuing cars.",
+        }),
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

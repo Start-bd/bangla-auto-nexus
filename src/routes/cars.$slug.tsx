@@ -41,7 +41,7 @@ export const Route = createFileRoute("/cars/$slug")({
     const similarCars = await fetchSimilarCars({ data: { brand: listing.brand, priceBdt: listing.priceBdt, excludeId: listing.id } });
     return { listing, similarCars };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const l = loaderData?.listing;
     const title = l
       ? `${l.brand} ${l.model} ${l.year} — ৳${l.priceBdt.toLocaleString("en-IN")} | Bangla Autos`
@@ -49,13 +49,40 @@ export const Route = createFileRoute("/cars/$slug")({
     const desc = l
       ? `${l.brand} ${l.model} ${l.year} ${l.condition === "reconditioned" ? "রিকন্ডিশন্ড" : ""} গাড়ি কিনুন। মূল্য ${formatPriceRaw(l.priceBdt)}। ${l.district}।`
       : "";
+    const url = `https://bangla.autos/cars/${params.slug}`;
+    const image = l?.photos?.[0];
     return {
       meta: [
         { title },
         { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "product" },
+        ...(image ? [
+          { property: "og:image", content: image },
+          { name: "twitter:image", content: image },
+        ] : []),
       ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: l ? [{
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: `${l.brand} ${l.model} ${l.year}`,
+          image: l.photos,
+          description: desc,
+          brand: { "@type": "Brand", name: l.brand },
+          offers: {
+            "@type": "Offer",
+            priceCurrency: "BDT",
+            price: l.priceBdt,
+            availability: "https://schema.org/InStock",
+            url,
+          },
+        }),
+      }] : [],
     };
   },
   component: CarDetailPage,
@@ -406,6 +433,8 @@ function CarDetailPage() {
             size="icon"
             className="h-10 w-10"
             onClick={() => setSaved(!saved)}
+            aria-label={saved ? "সেভ থেকে সরান" : "সেভ করুন"}
+            aria-pressed={saved}
           >
             <Heart
               size={18}
@@ -452,12 +481,14 @@ function PhotoGallery({
           <>
             <button
               onClick={prevPhoto}
+              aria-label="আগের ছবি"
               className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-background/70 p-2 text-foreground opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100"
             >
               <ChevronLeft size={20} />
             </button>
             <button
               onClick={nextPhoto}
+              aria-label="পরের ছবি"
               className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-background/70 p-2 text-foreground opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100"
             >
               <ChevronRight size={20} />
@@ -476,6 +507,7 @@ function PhotoGallery({
           <button
             key={i}
             onClick={() => setCurrentPhoto(i)}
+            aria-label={`ছবি ${i + 1} দেখুন`}
             className={`shrink-0 overflow-hidden rounded-md transition-all ${
               i === currentPhoto
                 ? "ring-2 ring-racing-red ring-offset-2 ring-offset-background"
