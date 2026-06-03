@@ -507,6 +507,7 @@ function PhotoGallery({
           <button
             key={i}
             onClick={() => setCurrentPhoto(i)}
+            aria-label={`ছবি ${i + 1} দেখুন`}
             className={`shrink-0 overflow-hidden rounded-md transition-all ${
               i === currentPhoto
                 ? "ring-2 ring-racing-red ring-offset-2 ring-offset-background"
