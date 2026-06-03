@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ValuationRouteImport } from './routes/valuation'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SellRouteImport } from './routes/sell'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as ReconditionedRouteImport } from './routes/reconditioned'
@@ -26,6 +27,11 @@ import { Route as CarsSlugRouteImport } from './routes/cars.$slug'
 const ValuationRoute = ValuationRouteImport.update({
   id: '/valuation',
   path: '/valuation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SellRoute = SellRouteImport.update({
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/reconditioned': typeof ReconditionedRoute
   '/reviews': typeof ReviewsRoute
   '/sell': typeof SellRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/valuation': typeof ValuationRoute
   '/cars/$slug': typeof CarsSlugRoute
   '/cars/': typeof CarsIndexRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/reconditioned': typeof ReconditionedRoute
   '/reviews': typeof ReviewsRoute
   '/sell': typeof SellRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/valuation': typeof ValuationRoute
   '/cars/$slug': typeof CarsSlugRoute
   '/cars': typeof CarsIndexRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/reconditioned': typeof ReconditionedRoute
   '/reviews': typeof ReviewsRoute
   '/sell': typeof SellRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/valuation': typeof ValuationRoute
   '/cars/$slug': typeof CarsSlugRoute
   '/cars/': typeof CarsIndexRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/reconditioned'
     | '/reviews'
     | '/sell'
+    | '/sitemap.xml'
     | '/valuation'
     | '/cars/$slug'
     | '/cars/'
@@ -161,6 +171,7 @@ export interface FileRouteTypes {
     | '/reconditioned'
     | '/reviews'
     | '/sell'
+    | '/sitemap.xml'
     | '/valuation'
     | '/cars/$slug'
     | '/cars'
@@ -176,6 +187,7 @@ export interface FileRouteTypes {
     | '/reconditioned'
     | '/reviews'
     | '/sell'
+    | '/sitemap.xml'
     | '/valuation'
     | '/cars/$slug'
     | '/cars/'
@@ -192,6 +204,7 @@ export interface RootRouteChildren {
   ReconditionedRoute: typeof ReconditionedRoute
   ReviewsRoute: typeof ReviewsRoute
   SellRoute: typeof SellRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ValuationRoute: typeof ValuationRoute
 }
 
@@ -202,6 +215,13 @@ declare module '@tanstack/react-router' {
       path: '/valuation'
       fullPath: '/valuation'
       preLoaderRoute: typeof ValuationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sell': {
@@ -314,8 +334,18 @@ const rootRouteChildren: RootRouteChildren = {
   ReconditionedRoute: ReconditionedRoute,
   ReviewsRoute: ReviewsRoute,
   SellRoute: SellRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ValuationRoute: ValuationRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
