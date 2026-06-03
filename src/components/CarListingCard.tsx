@@ -101,7 +101,12 @@ export function CarListingCard({ listing }: { listing: CarListing }) {
           <Button variant="whatsapp" size="sm" className="flex-1 text-xs">
             <MessageCircle size={14} /> WhatsApp
           </Button>
-          <Button variant="ghost-light" size="icon" className="h-8 w-8">
+          <Button
+            variant="ghost-light"
+            size="icon"
+            className="h-8 w-8"
+            aria-label={`${listing.brand} ${listing.model} ${listing.year} সেভ করুন`}
+          >
             <Heart size={14} />
           </Button>
         </div>

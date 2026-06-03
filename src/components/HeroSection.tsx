@@ -11,7 +11,10 @@ const TABS = [
 
 function SelectField({ label, options }: { label: string; options: string[] }) {
   return (
-    <select className="h-11 w-full rounded-md border border-border bg-input px-3 text-sm text-foreground font-bengali focus:border-racing-red focus:outline-none focus:ring-1 focus:ring-racing-red">
+    <select
+      aria-label={label.replace(/[▾\s]+$/, "").trim()}
+      className="h-11 w-full rounded-md border border-border bg-input px-3 text-sm text-foreground font-bengali focus:border-racing-red focus:outline-none focus:ring-1 focus:ring-racing-red"
+    >
       <option value="">{label}</option>
       {options.map((o) => (
         <option key={o} value={o}>{o}</option>

@@ -15,10 +15,28 @@ export const Route = createFileRoute("/")({
   loader: () => fetchCarListings(),
   head: () => ({
     meta: [
-      { title: "Bangla Autos — বাংলাদেশের সেরা গাড়ির বাজার | গাড়ি কিনুন ও বেচুন" },
-      { name: "description", content: "বাংলাদেশে গাড়ি কিনুন বা বেচুন। রিকন্ডিশন্ড, নতুন এবং ব্যবহৃত গাড়ির বিজ্ঞাপন। AI মূল্য নির্ধারণ, গাইড এবং রিভিউ — সম্পূর্ণ বাংলায়।" },
+      { title: "Bangla Autos — বাংলাদেশের সেরা গাড়ির বাজার" },
+      { name: "description", content: "বাংলাদেশে গাড়ি কিনুন বা বেচুন। রিকন্ডিশন্ড, নতুন ও ব্যবহৃত গাড়ির বিজ্ঞাপন, AI মূল্য নির্ধারণ, গাইড ও রিভিউ — সম্পূর্ণ বাংলায়।" },
       { property: "og:title", content: "Bangla Autos — বাংলাদেশের সেরা গাড়ির বাজার" },
       { property: "og:description", content: "বাংলাদেশে গাড়ি কিনুন বা বেচুন। রিকন্ডিশন্ড, নতুন ও ব্যবহৃত গাড়ি — সম্পূর্ণ বাংলায়।" },
+      { property: "og:url", content: "https://bangla.autos/" },
+    ],
+    links: [{ rel: "canonical", href: "https://bangla.autos/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Bangla Autos",
+          url: "https://bangla.autos",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://bangla.autos/cars?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
+        }),
+      },
     ],
   }),
   component: HomePage,
