@@ -86,7 +86,7 @@ function mapDbToCarListing(row: Record<string, unknown>): CarListing {
 export const fetchCarListings = createServerFn({ method: "GET" }).handler(async () => {
   const { data, error } = await getServerSupabase()
     .from("car_listings")
-    .select("*, dealers(name_bn)")
+    .select(PUBLIC_CAR_LISTING_SELECT)
     .eq("is_sold", false)
     .order("created_at", { ascending: false })
     .limit(100);
@@ -108,7 +108,7 @@ export const fetchCarBySlug = createServerFn({ method: "GET" })
   .handler(async ({ data: { slug } }) => {
     const { data, error } = await getServerSupabase()
       .from("car_listings")
-      .select("*, dealers(name_bn)")
+      .select(PUBLIC_CAR_LISTING_SELECT)
       .eq("slug", slug)
       .single();
 
@@ -135,7 +135,7 @@ export const fetchSimilarCars = createServerFn({ method: "GET" })
     // Fetch by brand
     const { data: brandMatches } = await supabase
       .from("car_listings")
-      .select("*, dealers(name_bn)")
+      .select(PUBLIC_CAR_LISTING_SELECT)
       .eq("is_sold", false)
       .neq("id", excludeId)
       .eq("brand", brand)
@@ -144,7 +144,7 @@ export const fetchSimilarCars = createServerFn({ method: "GET" })
     // Fetch by price range
     const { data: priceMatches } = await supabase
       .from("car_listings")
-      .select("*, dealers(name_bn)")
+      .select(PUBLIC_CAR_LISTING_SELECT)
       .eq("is_sold", false)
       .neq("id", excludeId)
       .gte("price_bdt", priceBdt - 500000)
