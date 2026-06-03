@@ -433,6 +433,8 @@ function CarDetailPage() {
             size="icon"
             className="h-10 w-10"
             onClick={() => setSaved(!saved)}
+            aria-label={saved ? "সেভ থেকে সরান" : "সেভ করুন"}
+            aria-pressed={saved}
           >
             <Heart
               size={18}
