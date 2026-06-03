@@ -2,6 +2,43 @@ import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
+import type { CarListing } from "@/data/mock-data";
+
+const PUBLIC_CAR_LISTING_SELECT = `
+  listing_tier,
+  id,
+  seller_user_id,
+  dealer_id,
+  brand,
+  model,
+  year,
+  slug,
+  condition,
+  price_bdt,
+  price_negotiable,
+  engine_cc,
+  fuel_type,
+  transmission,
+  odometer_km,
+  color,
+  color_bn,
+  grade,
+  origin_country,
+  auction_sheet_url,
+  features,
+  photos,
+  district,
+  description,
+  description_bn,
+  is_verified,
+  is_sold,
+  views_count,
+  seller_type,
+  expires_at,
+  created_at,
+  updated_at,
+  dealers(name_bn)
+`;
 
 function getServerSupabase() {
   const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
@@ -13,7 +50,6 @@ function getServerSupabase() {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }
-import type { CarListing } from "@/data/mock-data";
 
 function mapDbToCarListing(row: Record<string, unknown>): CarListing {
   const createdAt = new Date(row.created_at as string);
@@ -50,7 +86,7 @@ function mapDbToCarListing(row: Record<string, unknown>): CarListing {
 export const fetchCarListings = createServerFn({ method: "GET" }).handler(async () => {
   const { data, error } = await getServerSupabase()
     .from("car_listings")
-    .select("*, dealers(name_bn)")
+    .select(PUBLIC_CAR_LISTING_SELECT)
     .eq("is_sold", false)
     .order("created_at", { ascending: false })
     .limit(100);
@@ -72,7 +108,7 @@ export const fetchCarBySlug = createServerFn({ method: "GET" })
   .handler(async ({ data: { slug } }) => {
     const { data, error } = await getServerSupabase()
       .from("car_listings")
-      .select("*, dealers(name_bn)")
+      .select(PUBLIC_CAR_LISTING_SELECT)
       .eq("slug", slug)
       .single();
 
@@ -99,7 +135,7 @@ export const fetchSimilarCars = createServerFn({ method: "GET" })
     // Fetch by brand
     const { data: brandMatches } = await supabase
       .from("car_listings")
-      .select("*, dealers(name_bn)")
+      .select(PUBLIC_CAR_LISTING_SELECT)
       .eq("is_sold", false)
       .neq("id", excludeId)
       .eq("brand", brand)
@@ -108,7 +144,7 @@ export const fetchSimilarCars = createServerFn({ method: "GET" })
     // Fetch by price range
     const { data: priceMatches } = await supabase
       .from("car_listings")
-      .select("*, dealers(name_bn)")
+      .select(PUBLIC_CAR_LISTING_SELECT)
       .eq("is_sold", false)
       .neq("id", excludeId)
       .gte("price_bdt", priceBdt - 500000)
