@@ -1,15 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { PAGE_SEO } from "@/lib/pageSeo";
 
 export const Route = createFileRoute("/guides")({
   head: () => ({
     meta: [
-      { title: "গাড়ি কেনার গাইড — Bangla Autos" },
-      { name: "description", content: "বাংলাদেশে গাড়ি কেনার আগে যা জানা দরকার — রিকন্ডিশন্ড জাপানি গাড়ির গ্রেডিং, BRTA রেজিস্ট্রেশন, আমদানি শুল্ক, ব্যাংক ফাইন্যান্সিং ও প্রি-পারচেজ চেকলিস্ট, সম্পূর্ণ বাংলায়।" },
-      { property: "og:title", content: "গাড়ি কেনার গাইড — Bangla Autos" },
-      { property: "og:description", content: "রিকন্ডিশন্ড গ্রেডিং, BRTA রেজিস্ট্রেশন, ফাইন্যান্সিং এবং প্রি-পারচেজ চেকলিস্ট — সম্পূর্ণ বাংলায় গাইড।" },
-      { property: "og:url", content: "https://bangla.autos/guides" },
+      { title: PAGE_SEO.guides.title },
+      { name: "description", content: PAGE_SEO.guides.description },
+      { name: "keywords", content: PAGE_SEO.guides.keywords },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: PAGE_SEO.guides.title },
+      { property: "og:description", content: PAGE_SEO.guides.description },
+      { property: "og:url", content: PAGE_SEO.guides.canonical },
     ],
-    links: [{ rel: "canonical", href: "https://bangla.autos/guides" }],
+    links: [{ rel: "canonical", href: PAGE_SEO.guides.canonical }],
   }),
   component: GuidesPage,
 });

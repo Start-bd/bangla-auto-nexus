@@ -1,15 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { PAGE_SEO } from "@/lib/pageSeo";
 
 export const Route = createFileRoute("/news")({
   head: () => ({
     meta: [
-      { title: "অটো নিউজ — Bangla Autos" },
-      { name: "description", content: "বাংলাদেশের সর্বশেষ অটোমোটিভ খবর — নতুন গাড়ি লঞ্চ, আমদানি ও শুল্ক নীতি, জ্বালানির দাম, BRTA নোটিশ এবং রিকন্ডিশন্ড বাজারের আপডেট।" },
-      { property: "og:title", content: "অটো নিউজ — Bangla Autos" },
-      { property: "og:description", content: "বাংলাদেশের সর্বশেষ অটোমোটিভ খবর, আমদানি নীতি, জ্বালানির দাম ও বাজার আপডেট।" },
-      { property: "og:url", content: "https://bangla.autos/news" },
+      { title: PAGE_SEO.news.title },
+      { name: "description", content: PAGE_SEO.news.description },
+      { name: "keywords", content: PAGE_SEO.news.keywords },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: PAGE_SEO.news.title },
+      { property: "og:description", content: PAGE_SEO.news.description },
+      { property: "og:url", content: PAGE_SEO.news.canonical },
     ],
-    links: [{ rel: "canonical", href: "https://bangla.autos/news" }],
+    links: [{ rel: "canonical", href: PAGE_SEO.news.canonical }],
   }),
   component: NewsPage,
 });

@@ -1,6 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { organizationSchema } from "@/lib/schemas";
 
 import appCss from "../styles.css?url";
 
@@ -38,28 +39,22 @@ export const Route = createRootRoute({
       { name: "author", content: "Bangla Autos" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Bangla Autos" },
+      { property: "og:locale", content: "bn_BD" },
+      { property: "og:image", content: "https://bangla.autos/og-default.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     scripts: [
       {
         async: true,
-        src: "https://www.googletagmanager.com/gtag/js?id=G-TKEST8RCE3",
+        src: "https://www.googletagmanager.com/gtag/js?id=G-9CN5FVKN4P",
       },
       {
         children:
-          "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-TKEST8RCE3');",
+          "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-9CN5FVKN4P');",
       },
       {
         type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Bangla Autos",
-          url: "https://bangla.autos",
-          logo: "https://bangla.autos/favicon.ico",
-          description:
-            "Bangladesh's leading Bengali-language automotive marketplace for buying, selling, and valuing cars.",
-        }),
+        children: JSON.stringify(organizationSchema),
       },
     ],
     links: [

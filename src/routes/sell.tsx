@@ -5,13 +5,20 @@ import { SellCarForm } from "@/components/SellCarForm";
 import { Button } from "@/components/ui/button";
 import { Car, LogIn } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
+import { PAGE_SEO } from "@/lib/pageSeo";
 
 export const Route = createFileRoute("/sell")({
   head: () => ({
     meta: [
-      { title: "গাড়ি বিক্রি করুন — Bangla Autos" },
-      { name: "description", content: "বিনামূল্যে গাড়ির বিজ্ঞাপন দিন। ১০ লক্ষ+ ক্রেতার কাছে পৌঁছান।" },
+      { title: PAGE_SEO.sell.title },
+      { name: "description", content: PAGE_SEO.sell.description },
+      { name: "keywords", content: PAGE_SEO.sell.keywords },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: PAGE_SEO.sell.title },
+      { property: "og:description", content: PAGE_SEO.sell.description },
+      { property: "og:url", content: PAGE_SEO.sell.canonical },
     ],
+    links: [{ rel: "canonical", href: PAGE_SEO.sell.canonical }],
   }),
   component: SellPage,
 });

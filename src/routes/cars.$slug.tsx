@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import { formatPriceRaw, getConditionLabel } from "@/data/mock-data";
 import type { CarListing } from "@/data/mock-data";
 import { fetchCarBySlug, fetchSimilarCars } from "@/data/cars.functions";
+import { carListingSchema, breadcrumbSchema } from "@/lib/schemas";
 import { CarListingCard } from "@/components/CarListingCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -65,24 +66,32 @@ export const Route = createFileRoute("/cars/$slug")({
         ] : []),
       ],
       links: [{ rel: "canonical", href: url }],
-      scripts: l ? [{
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Product",
-          name: `${l.brand} ${l.model} ${l.year}`,
-          image: l.photos,
-          description: desc,
-          brand: { "@type": "Brand", name: l.brand },
-          offers: {
-            "@type": "Offer",
-            priceCurrency: "BDT",
+      scripts: l ? [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(carListingSchema({
+            name: `${l.brand} ${l.model} ${l.year}`,
+            brand: l.brand,
+            model: l.model,
             price: l.priceBdt,
-            availability: "https://schema.org/InStock",
-            url,
-          },
-        }),
-      }] : [],
+            condition: l.condition === "reconditioned" ? "RefurbishedCondition" : l.condition === "new" ? "NewCondition" : "UsedCondition",
+            mileage: l.odometerKm,
+            color: l.color_en,
+            url: `/cars/${params.slug}`,
+            image: l.photos?.[0],
+            description: desc,
+            year: l.year,
+          })),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(breadcrumbSchema([
+            { name: "হোম", url: "/" },
+            { name: "গাড়ির বাজার", url: "/cars" },
+            { name: `${l.brand} ${l.model} ${l.year}`, url: `/cars/${params.slug}` },
+          ])),
+        },
+      ] : [],
     };
   },
   component: CarDetailPage,

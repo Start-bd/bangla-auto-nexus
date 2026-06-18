@@ -1,15 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { PAGE_SEO } from "@/lib/pageSeo";
 
 export const Route = createFileRoute("/compare")({
   head: () => ({
     meta: [
-      { title: "গাড়ি তুলনা — Bangla Autos" },
-      { name: "description", content: "যেকোনো দুটি বা তিনটি গাড়ি পাশাপাশি তুলনা করুন — দাম, ইঞ্জিন, মাইলেজ, ফিচার ও রক্ষণাবেক্ষণ খরচসহ বিস্তারিত স্পেসিফিকেশন এক জায়গায়।" },
-      { property: "og:title", content: "গাড়ি তুলনা — Bangla Autos" },
-      { property: "og:description", content: "বাংলাদেশের গাড়ির বাজারের যেকোনো দুটি বা তিনটি মডেল পাশাপাশি তুলনা করে সঠিক সিদ্ধান্ত নিন।" },
-      { property: "og:url", content: "https://bangla.autos/compare" },
+      { title: PAGE_SEO.compare.title },
+      { name: "description", content: PAGE_SEO.compare.description },
+      { name: "keywords", content: PAGE_SEO.compare.keywords },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: PAGE_SEO.compare.title },
+      { property: "og:description", content: PAGE_SEO.compare.description },
+      { property: "og:url", content: PAGE_SEO.compare.canonical },
     ],
-    links: [{ rel: "canonical", href: "https://bangla.autos/compare" }],
+    links: [{ rel: "canonical", href: PAGE_SEO.compare.canonical }],
   }),
   component: ComparePage,
 });

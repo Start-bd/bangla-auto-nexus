@@ -15,18 +15,50 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        const today = new Date().toISOString().split("T")[0];
         const staticEntries: SitemapEntry[] = [
-          { path: "/", changefreq: "daily", priority: "1.0" },
-          { path: "/cars", changefreq: "daily", priority: "0.9" },
-          { path: "/reconditioned", changefreq: "weekly", priority: "0.8" },
+          // Core pages
+          { path: "/", changefreq: "daily", priority: "1.0", lastmod: today },
+          { path: "/cars", changefreq: "daily", priority: "0.9", lastmod: today },
+          { path: "/reconditioned", changefreq: "daily", priority: "0.9", lastmod: today },
           { path: "/sell", changefreq: "monthly", priority: "0.8" },
           { path: "/compare", changefreq: "weekly", priority: "0.7" },
           { path: "/valuation", changefreq: "monthly", priority: "0.7" },
           { path: "/dealers", changefreq: "weekly", priority: "0.7" },
-          { path: "/reviews", changefreq: "weekly", priority: "0.6" },
-          { path: "/guides", changefreq: "weekly", priority: "0.6" },
-          { path: "/news", changefreq: "daily", priority: "0.6" },
+          { path: "/reviews", changefreq: "weekly", priority: "0.7", lastmod: today },
+          { path: "/guides", changefreq: "weekly", priority: "0.7" },
+          { path: "/news", changefreq: "daily", priority: "0.7", lastmod: today },
           { path: "/pricing", changefreq: "monthly", priority: "0.5" },
+          // Brand pages
+          { path: "/cars/toyota", changefreq: "weekly", priority: "0.8" },
+          { path: "/cars/honda", changefreq: "weekly", priority: "0.8" },
+          { path: "/cars/suzuki", changefreq: "weekly", priority: "0.8" },
+          { path: "/cars/nissan", changefreq: "weekly", priority: "0.8" },
+          { path: "/cars/mitsubishi", changefreq: "weekly", priority: "0.7" },
+          { path: "/cars/hyundai", changefreq: "weekly", priority: "0.7" },
+          { path: "/cars/bmw", changefreq: "weekly", priority: "0.7" },
+          { path: "/cars/mercedes", changefreq: "weekly", priority: "0.7" },
+          // Top model pages
+          { path: "/cars/toyota/axio", changefreq: "weekly", priority: "0.8" },
+          { path: "/cars/toyota/allion", changefreq: "weekly", priority: "0.8" },
+          { path: "/cars/toyota/prius", changefreq: "weekly", priority: "0.8" },
+          { path: "/cars/toyota/aqua", changefreq: "weekly", priority: "0.8" },
+          { path: "/cars/toyota/premio", changefreq: "weekly", priority: "0.7" },
+          { path: "/cars/toyota/harrier", changefreq: "weekly", priority: "0.7" },
+          { path: "/cars/honda/vezel", changefreq: "weekly", priority: "0.8" },
+          { path: "/cars/honda/fit", changefreq: "weekly", priority: "0.7" },
+          { path: "/cars/honda/grace", changefreq: "weekly", priority: "0.7" },
+          // District pages
+          { path: "/cars/dhaka", changefreq: "daily", priority: "0.8", lastmod: today },
+          { path: "/cars/chittagong", changefreq: "daily", priority: "0.8", lastmod: today },
+          { path: "/cars/sylhet", changefreq: "weekly", priority: "0.7" },
+          { path: "/cars/rajshahi", changefreq: "weekly", priority: "0.7" },
+          { path: "/cars/mymensingh", changefreq: "weekly", priority: "0.7" },
+          { path: "/cars/khulna", changefreq: "weekly", priority: "0.7" },
+          // Guide pages
+          { path: "/guides/reconditioned-car-buying-guide", changefreq: "monthly", priority: "0.7" },
+          { path: "/guides/car-loan-bangladesh", changefreq: "monthly", priority: "0.7" },
+          { path: "/guides/brta-registration", changefreq: "monthly", priority: "0.6" },
         ];
 
         let dynamicEntries: SitemapEntry[] = [];

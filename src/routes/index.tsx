@@ -10,33 +10,31 @@ import { SellCTA } from "@/components/SellCTA";
 import { fetchCarListings } from "@/data/cars.functions";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
+import { PAGE_SEO } from "@/lib/pageSeo";
+import { websiteSchema, organizationSchema, homepageFaqs } from "@/lib/schemas";
 
 export const Route = createFileRoute("/")({
   loader: () => fetchCarListings(),
   head: () => ({
     meta: [
-      { title: "Bangla Autos — বাংলাদেশের সেরা গাড়ির বাজার" },
-      { name: "description", content: "বাংলাদেশে গাড়ি কিনুন বা বেচুন। রিকন্ডিশন্ড, নতুন ও ব্যবহৃত গাড়ির বিজ্ঞাপন, AI মূল্য নির্ধারণ, গাইড ও রিভিউ — সম্পূর্ণ বাংলায়।" },
-      { property: "og:title", content: "Bangla Autos — বাংলাদেশের সেরা গাড়ির বাজার" },
-      { property: "og:description", content: "বাংলাদেশে গাড়ি কিনুন বা বেচুন। রিকন্ডিশন্ড, নতুন ও ব্যবহৃত গাড়ি — সম্পূর্ণ বাংলায়।" },
-      { property: "og:url", content: "https://bangla.autos/" },
+      { title: PAGE_SEO.home.title },
+      { name: "description", content: PAGE_SEO.home.description },
+      { name: "keywords", content: PAGE_SEO.home.keywords },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: PAGE_SEO.home.title },
+      { property: "og:description", content: PAGE_SEO.home.description },
+      { property: "og:url", content: PAGE_SEO.home.canonical },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://bangla.autos/og-default.jpg" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: PAGE_SEO.home.title },
+      { name: "twitter:description", content: PAGE_SEO.home.description },
     ],
-    links: [{ rel: "canonical", href: "https://bangla.autos/" }],
+    links: [{ rel: "canonical", href: PAGE_SEO.home.canonical }],
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Bangla Autos",
-          url: "https://bangla.autos",
-          potentialAction: {
-            "@type": "SearchAction",
-            target: "https://bangla.autos/cars?q={search_term_string}",
-            "query-input": "required name=search_term_string",
-          },
-        }),
-      },
+      { type: "application/ld+json", children: JSON.stringify(websiteSchema) },
+      { type: "application/ld+json", children: JSON.stringify(organizationSchema) },
+      { type: "application/ld+json", children: JSON.stringify(homepageFaqs) },
     ],
   }),
   component: HomePage,

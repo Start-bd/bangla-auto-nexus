@@ -1,4 +1,5 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { PAGE_SEO } from "@/lib/pageSeo";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { useState, useMemo } from "react";
@@ -43,13 +44,15 @@ export const Route = createFileRoute("/cars/")({
   loader: () => fetchCarListings(),
   head: () => ({
     meta: [
-      { title: "গাড়ির বাজার — Bangla Autos | গাড়ি কিনুন" },
-      {
-        name: "description",
-        content:
-          "বাংলাদেশে রিকন্ডিশন্ড, নতুন এবং ব্যবহৃত গাড়ি কিনুন। সেরা দামে গাড়ি খুঁজুন।",
-      },
+      { title: PAGE_SEO.cars.title },
+      { name: "description", content: PAGE_SEO.cars.description },
+      { name: "keywords", content: PAGE_SEO.cars.keywords },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: PAGE_SEO.cars.title },
+      { property: "og:description", content: PAGE_SEO.cars.description },
+      { property: "og:url", content: PAGE_SEO.cars.canonical },
     ],
+    links: [{ rel: "canonical", href: PAGE_SEO.cars.canonical }],
   }),
   component: CarsPage,
   errorComponent: ({ error }) => {

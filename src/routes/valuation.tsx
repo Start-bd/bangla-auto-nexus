@@ -1,11 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { PAGE_SEO } from "@/lib/pageSeo";
 
 export const Route = createFileRoute("/valuation")({
   head: () => ({
     meta: [
-      { title: "AI গাড়ির মূল্য — Bangla Autos | গাড়ির দাম কত?" },
-      { name: "description", content: "AI দিয়ে আপনার গাড়ির উপযুক্ত বাজারমূল্য জানুন। বিনামূল্যে।" },
+      { title: PAGE_SEO.valuation.title },
+      { name: "description", content: PAGE_SEO.valuation.description },
+      { name: "keywords", content: PAGE_SEO.valuation.keywords },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: PAGE_SEO.valuation.title },
+      { property: "og:description", content: PAGE_SEO.valuation.description },
+      { property: "og:url", content: PAGE_SEO.valuation.canonical },
     ],
+    links: [{ rel: "canonical", href: PAGE_SEO.valuation.canonical }],
   }),
   component: ValuationPage,
 });

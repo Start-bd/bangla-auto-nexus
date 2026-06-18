@@ -1,11 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { PAGE_SEO } from "@/lib/pageSeo";
 
 export const Route = createFileRoute("/reviews")({
   head: () => ({
     meta: [
-      { title: "গাড়ির রিভিউ — Bangla Autos" },
-      { name: "description", content: "বাংলায় গাড়ির রিভিউ পড়ুন। Toyota, Honda, Suzuki সব ব্র্যান্ডের বিস্তারিত রিভিউ।" },
+      { title: PAGE_SEO.reviews.title },
+      { name: "description", content: PAGE_SEO.reviews.description },
+      { name: "keywords", content: PAGE_SEO.reviews.keywords },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: PAGE_SEO.reviews.title },
+      { property: "og:description", content: PAGE_SEO.reviews.description },
+      { property: "og:url", content: PAGE_SEO.reviews.canonical },
     ],
+    links: [{ rel: "canonical", href: PAGE_SEO.reviews.canonical }],
   }),
   component: ReviewsPage,
 });

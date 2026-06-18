@@ -1,15 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { PAGE_SEO } from "@/lib/pageSeo";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "মূল্য তালিকা — Bangla Autos | ডিলার সাবস্ক্রিপশন" },
-      { name: "description", content: "Bangla Autos-এ বিজ্ঞাপন দেওয়ার মূল্য তালিকা — ব্যক্তিগত বিক্রেতাদের জন্য ফ্রি লিস্টিং, ডিলারদের জন্য মাসিক সাবস্ক্রিপশন এবং ফিচার্ড লিস্টিং প্যাকেজের বিস্তারিত দাম।" },
-      { property: "og:title", content: "মূল্য তালিকা — Bangla Autos" },
-      { property: "og:description", content: "ফ্রি ব্যক্তিগত লিস্টিং, ডিলার সাবস্ক্রিপশন এবং ফিচার্ড লিস্টিং প্যাকেজের সম্পূর্ণ মূল্য তালিকা।" },
-      { property: "og:url", content: "https://bangla.autos/pricing" },
+      { title: PAGE_SEO.pricing.title },
+      { name: "description", content: PAGE_SEO.pricing.description },
+      { name: "keywords", content: PAGE_SEO.pricing.keywords },
+      { name: "robots", content: "index,follow" },
+      { property: "og:title", content: PAGE_SEO.pricing.title },
+      { property: "og:description", content: PAGE_SEO.pricing.description },
+      { property: "og:url", content: PAGE_SEO.pricing.canonical },
     ],
-    links: [{ rel: "canonical", href: "https://bangla.autos/pricing" }],
+    links: [{ rel: "canonical", href: PAGE_SEO.pricing.canonical }],
   }),
   component: PricingPage,
 });
