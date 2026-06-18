@@ -71,11 +71,11 @@ export function carListingSchema({
     model,
     description,
     url: `${BASE_URL}${url}`,
-    image,
+    image: image ? (image.startsWith("http") ? image : `${BASE_URL}${image}`) : undefined,
     color,
     vehicleModelDate: year?.toString(),
     mileageFromOdometer: mileage
-      ? { "@type": "QuantitativeValue", value: mileage, unitCode: "KMT" }
+      ? { "@type": "QuantitativeValue", value: mileage, unitText: "km" }
       : undefined,
     itemCondition: `https://schema.org/${condition}`,
     offers: {
@@ -138,7 +138,7 @@ export const homepageFaqs = faqSchema([
   {
     question: "বাংলাদেশে কোন গাড়ির ব্র্যান্ড সবচেয়ে ভালো?",
     answer:
-      "বাংলাদেশে Toyota সবচেয়ে জনপ্রিয় ব্র্যান্ড — মোট গাড়ি বিজ্ঞাপনের ৮৬% Toyota। কম রক্ষণাবেক্ষণ খরচ, ভালো মাইলেজ এবং উচ্চ রিসেল মূল্যের কারণে এটি সেরা পছন্দ।",
+      "বাংলাদেশে Toyota সবচেয়ে জনপ্রিয় ব্র্যান্ড — বেশিরভাগ রিকন্ডিশন্ড গাড়ির বিজ্ঞাপনই Toyota। কম রক্ষণাবেক্ষণ খরচ, ভালো মাইলেজ এবং উচ্চ রিসেল মূল্যের কারণে এটি সেরা পছন্দ।",
   },
   {
     question: "গাড়ি কেনার আগে কী কী যাচাই করতে হবে?",

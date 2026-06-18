@@ -56,12 +56,18 @@ export const Route = createFileRoute("/cars/$slug")({
       meta: [
         { title },
         { name: "description", content: desc },
+        { name: "robots", content: "index,follow" },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:url", content: url },
         { property: "og:type", content: "product" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: desc },
         ...(image ? [
           { property: "og:image", content: image },
+          { property: "og:image:width", content: "1200" },
+          { property: "og:image:height", content: "630" },
           { name: "twitter:image", content: image },
         ] : []),
       ],
