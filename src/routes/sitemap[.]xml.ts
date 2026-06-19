@@ -55,7 +55,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/cars/rajshahi", changefreq: "weekly", priority: "0.7" },
           { path: "/cars/mymensingh", changefreq: "weekly", priority: "0.7" },
           { path: "/cars/khulna", changefreq: "weekly", priority: "0.7" },
-          // Guide pages
+          // Guide sub-pages — planned routes, included for crawl discovery ahead of implementation
           { path: "/guides/reconditioned-car-buying-guide", changefreq: "monthly", priority: "0.7" },
           { path: "/guides/car-loan-bangladesh", changefreq: "monthly", priority: "0.7" },
           { path: "/guides/brta-registration", changefreq: "monthly", priority: "0.6" },
