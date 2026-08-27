@@ -27,7 +27,17 @@ function ReviewsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12">
       <h1 className="font-bengali text-3xl font-bold text-foreground">গাড়ির রিভিউ</h1>
-      <p className="mt-2 text-muted-foreground font-bengali">বাংলায় রিভিউ — শীঘ্রই আসছে</p>
+      <p className="mt-4 max-w-3xl text-muted-foreground font-bengali">
+        বাংলাদেশের রাস্তা ও আবহাওয়ার প্রেক্ষিতে গাড়ির বাস্তব অভিজ্ঞতাভিত্তিক রিভিউ —
+        মাইলেজ, যন্ত্রাংশের প্রাপ্যতা, সার্ভিসিং খরচ, রিসেল ভ্যালু এবং ঢাকার জ্যামে
+        চালানোর অভিজ্ঞতা নিয়ে বিশ্লেষণ।
+      </p>
+      <ul className="mt-6 max-w-3xl list-disc space-y-2 pl-5 text-muted-foreground font-bengali">
+        <li>জ্বালানি খরচ ও হাইব্রিড ব্যাটারির বাস্তব পারফরম্যান্স</li>
+        <li>স্পেয়ার পার্টস ও ওয়ার্কশপ সহজলভ্যতা</li>
+        <li>পরিবার ও রাইড শেয়ারিং ব্যবহারের উপযোগিতা</li>
+        <li>একই দামের অন্য মডেলের সাথে তুলনা</li>
+      </ul>
     </div>
   );
 }

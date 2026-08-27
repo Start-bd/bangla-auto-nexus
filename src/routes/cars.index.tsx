@@ -373,6 +373,7 @@ function CarsPage() {
           {/* Sort */}
           <select
             value={search.sort}
+            aria-label="গাড়ি সাজান"
             onChange={(e) => updateSearch({ sort: e.target.value })}
             className="h-8 rounded-md border border-surface-border bg-card px-3 text-xs text-foreground font-bengali focus:outline-none focus:ring-1 focus:ring-ring"
           >
