@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { Button } from "./ui/button";
 import { Search } from "lucide-react";
 import { CAR_BRANDS, BD_DISTRICTS, POPULAR_SEARCHES } from "@/data/mock-data";
@@ -9,22 +10,91 @@ const TABS = [
   { id: "valuation", icon: "💰", label: "মূল্য জানুন" },
 ] as const;
 
-function SelectField({ label, options }: { label: string; options: string[] }) {
+type Option = { value: string; label: string };
+
+function SelectField({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: (string | Option)[];
+  value?: string;
+  onChange?: (v: string) => void;
+}) {
+  const normalized: Option[] = options.map((o) =>
+    typeof o === "string" ? { value: o, label: o } : o,
+  );
   return (
     <select
       aria-label={label.replace(/[▾\s]+$/, "").trim()}
+      value={value}
+      onChange={(e) => onChange?.(e.target.value)}
       className="h-11 w-full rounded-md border border-border bg-input px-3 text-sm text-foreground font-bengali focus:border-racing-red focus:outline-none focus:ring-1 focus:ring-racing-red"
     >
       <option value="">{label}</option>
-      {options.map((o) => (
-        <option key={o} value={o}>{o}</option>
+      {normalized.map((o) => (
+        <option key={o.value} value={o.value}>{o.label}</option>
       ))}
     </select>
   );
 }
 
+const CONDITION_OPTIONS: Option[] = [
+  { value: "reconditioned", label: "রিকন্ডিশন্ড" },
+  { value: "new", label: "ব্র্যান্ড নিউ" },
+  { value: "used", label: "ব্যবহৃত" },
+];
+
+const BRAND_OPTIONS: Option[] = CAR_BRANDS.map((b) => ({
+  value: b.name,
+  label: b.name_bn,
+}));
+
+const BUDGET_FROM: Option[] = [
+  { value: "500000", label: "৳ ৫ লাখ" },
+  { value: "1000000", label: "৳ ১০ লাখ" },
+  { value: "1500000", label: "৳ ১৫ লাখ" },
+  { value: "2000000", label: "৳ ২০ লাখ" },
+];
+
+const BUDGET_TO: Option[] = [
+  { value: "1500000", label: "৳ ১৫ লাখ" },
+  { value: "2000000", label: "৳ ২০ লাখ" },
+  { value: "3000000", label: "৳ ৩০ লাখ" },
+  { value: "5000000", label: "৳ ৫০ লাখ" },
+];
+
+
 export function HeroSection() {
   const [activeTab, setActiveTab] = useState<string>("buy");
+  const navigate = useNavigate();
+  const [condition, setCondition] = useState("");
+  const [brand, setBrand] = useState("");
+  const [model, setModel] = useState("");
+  const [priceMin, setPriceMin] = useState("");
+  const [priceMax, setPriceMax] = useState("");
+  const [district, setDistrict] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate({
+      to: "/cars",
+      search: {
+        brand,
+        condition,
+        district,
+        fuel: "",
+        grade: "",
+        priceMin: priceMin ? Number(priceMin) : 0,
+        priceMax: priceMax ? Number(priceMax) : 0,
+        sort: "newest",
+        q: model,
+      },
+    });
+  };
+
 
   return (
     <section className="carbon-fiber relative overflow-hidden bg-background pb-16 pt-12 md:pb-24 md:pt-20">
@@ -70,40 +140,53 @@ export function HeroSection() {
           {/* Search form */}
           <div className="rounded-b-lg border border-border bg-card p-4 md:p-6">
             {activeTab === "buy" && (
-              <div className="space-y-3">
+              <form className="space-y-3" onSubmit={handleSearch}>
                 <div className="grid gap-3 md:grid-cols-3">
                   <SelectField
                     label="গাড়ির ধরন ▾"
-                    options={["রিকন্ডিশন্ড", "ব্র্যান্ড নিউ", "ব্যবহৃত"]}
+                    options={CONDITION_OPTIONS}
+                    value={condition}
+                    onChange={setCondition}
                   />
                   <SelectField
                     label="ব্র্যান্ড ▾"
-                    options={CAR_BRANDS.map((b) => b.name_bn)}
+                    options={BRAND_OPTIONS}
+                    value={brand}
+                    onChange={setBrand}
                   />
                   <SelectField
                     label="মডেল ▾"
                     options={["Aqua", "Vezel", "Swift", "Axio", "Fit", "Note", "Prius"]}
+                    value={model}
+                    onChange={setModel}
                   />
                 </div>
                 <div className="grid gap-3 md:grid-cols-3">
                   <SelectField
                     label="বাজেট থেকে ▾"
-                    options={["৳ ৫ লাখ", "৳ ১০ লাখ", "৳ ১৫ লাখ", "৳ ২০ লাখ"]}
+                    options={BUDGET_FROM}
+                    value={priceMin}
+                    onChange={setPriceMin}
                   />
                   <SelectField
                     label="বাজেট পর্যন্ত ▾"
-                    options={["৳ ১৫ লাখ", "৳ ২০ লাখ", "৳ ৩০ লাখ", "৳ ৫০ লাখ"]}
+                    options={BUDGET_TO}
+                    value={priceMax}
+                    onChange={setPriceMax}
                   />
                   <SelectField
                     label="জেলা ▾"
                     options={BD_DISTRICTS}
+                    value={district}
+                    onChange={setDistrict}
                   />
                 </div>
-                <Button variant="hero" size="xl" className="w-full">
+                <Button type="submit" variant="hero" size="xl" className="w-full">
                   <Search size={18} /> গাড়ি খুঁজুন
                 </Button>
-              </div>
+              </form>
             )}
+
 
             {activeTab === "sell" && (
               <div className="space-y-3 text-center">

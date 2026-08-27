@@ -97,6 +97,8 @@ export function Navbar() {
             <button
               className="relative ml-2 text-foreground md:hidden"
               style={{ zIndex: 10000 }}
+              aria-label={mobileOpen ? "মেনু বন্ধ করুন" : "মেনু খুলুন"}
+              aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
