@@ -5,7 +5,7 @@ export interface CarListing {
   model: string;
   variant?: string;
   year: number;
-  condition: "reconditioned" | "new" | "used-local";
+  condition: "reconditioned" | "new" | "used" | "used-local";
   grade?: string;
   priceBdt: number;
   fuelType: string;
