@@ -69,6 +69,32 @@ const BUDGET_TO: Option[] = [
 
 export function HeroSection() {
   const [activeTab, setActiveTab] = useState<string>("buy");
+  const navigate = useNavigate();
+  const [condition, setCondition] = useState("");
+  const [brand, setBrand] = useState("");
+  const [model, setModel] = useState("");
+  const [priceMin, setPriceMin] = useState("");
+  const [priceMax, setPriceMax] = useState("");
+  const [district, setDistrict] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate({
+      to: "/cars",
+      search: {
+        brand,
+        condition,
+        district,
+        fuel: "",
+        grade: "",
+        priceMin: priceMin ? Number(priceMin) : 0,
+        priceMax: priceMax ? Number(priceMax) : 0,
+        sort: "newest",
+        q: model,
+      },
+    });
+  };
+
 
   return (
     <section className="carbon-fiber relative overflow-hidden bg-background pb-16 pt-12 md:pb-24 md:pt-20">
