@@ -114,40 +114,53 @@ export function HeroSection() {
           {/* Search form */}
           <div className="rounded-b-lg border border-border bg-card p-4 md:p-6">
             {activeTab === "buy" && (
-              <div className="space-y-3">
+              <form className="space-y-3" onSubmit={handleSearch}>
                 <div className="grid gap-3 md:grid-cols-3">
                   <SelectField
                     label="গাড়ির ধরন ▾"
-                    options={["রিকন্ডিশন্ড", "ব্র্যান্ড নিউ", "ব্যবহৃত"]}
+                    options={CONDITION_OPTIONS}
+                    value={condition}
+                    onChange={setCondition}
                   />
                   <SelectField
                     label="ব্র্যান্ড ▾"
-                    options={CAR_BRANDS.map((b) => b.name_bn)}
+                    options={BRAND_OPTIONS}
+                    value={brand}
+                    onChange={setBrand}
                   />
                   <SelectField
                     label="মডেল ▾"
                     options={["Aqua", "Vezel", "Swift", "Axio", "Fit", "Note", "Prius"]}
+                    value={model}
+                    onChange={setModel}
                   />
                 </div>
                 <div className="grid gap-3 md:grid-cols-3">
                   <SelectField
                     label="বাজেট থেকে ▾"
-                    options={["৳ ৫ লাখ", "৳ ১০ লাখ", "৳ ১৫ লাখ", "৳ ২০ লাখ"]}
+                    options={BUDGET_FROM}
+                    value={priceMin}
+                    onChange={setPriceMin}
                   />
                   <SelectField
                     label="বাজেট পর্যন্ত ▾"
-                    options={["৳ ১৫ লাখ", "৳ ২০ লাখ", "৳ ৩০ লাখ", "৳ ৫০ লাখ"]}
+                    options={BUDGET_TO}
+                    value={priceMax}
+                    onChange={setPriceMax}
                   />
                   <SelectField
                     label="জেলা ▾"
                     options={BD_DISTRICTS}
+                    value={district}
+                    onChange={setDistrict}
                   />
                 </div>
-                <Button variant="hero" size="xl" className="w-full">
+                <Button type="submit" variant="hero" size="xl" className="w-full">
                   <Search size={18} /> গাড়ি খুঁজুন
                 </Button>
-              </div>
+              </form>
             )}
+
 
             {activeTab === "sell" && (
               <div className="space-y-3 text-center">
