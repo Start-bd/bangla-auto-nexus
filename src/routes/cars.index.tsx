@@ -142,7 +142,11 @@ function CarsPage() {
     }
     if (search.brand) results = results.filter((c) => c.brand === search.brand);
     if (search.condition)
-      results = results.filter((c) => c.condition === search.condition);
+      results = results.filter((c) =>
+        search.condition === "used"
+          ? c.condition === "used" || c.condition === "used-local"
+          : c.condition === search.condition,
+      );
     if (search.district)
       results = results.filter((c) => c.district === search.district);
     if (search.fuel)
