@@ -5,7 +5,7 @@ export interface CarListing {
   model: string;
   variant?: string;
   year: number;
-  condition: "reconditioned" | "new" | "used-local";
+  condition: "reconditioned" | "new" | "used" | "used-local";
   grade?: string;
   priceBdt: number;
   fuelType: string;
@@ -259,6 +259,7 @@ export function getConditionLabel(condition: string): { label: string; color: st
   switch (condition) {
     case "reconditioned": return { label: "রিকন্ডিশন্ড", color: "racing-red" };
     case "new": return { label: "ব্র্যান্ড নিউ", color: "bd-green" };
+    case "used":
     case "used-local": return { label: "ব্যবহৃত", color: "gold" };
     default: return { label: condition, color: "muted" };
   }

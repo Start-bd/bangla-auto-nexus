@@ -79,7 +79,7 @@ export const Route = createFileRoute("/cars/")({
 const CONDITIONS = [
   { value: "reconditioned", label: "রিকন্ডিশন্ড" },
   { value: "new", label: "ব্র্যান্ড নিউ" },
-  { value: "used-local", label: "ব্যবহৃত" },
+  { value: "used", label: "ব্যবহৃত" },
 ];
 
 const FUEL_TYPES = ["পেট্রোল", "হাইব্রিড", "ডিজেল", "ইলেকট্রিক", "CNG"];
@@ -142,7 +142,11 @@ function CarsPage() {
     }
     if (search.brand) results = results.filter((c) => c.brand === search.brand);
     if (search.condition)
-      results = results.filter((c) => c.condition === search.condition);
+      results = results.filter((c) =>
+        search.condition === "used"
+          ? c.condition === "used" || c.condition === "used-local"
+          : c.condition === search.condition,
+      );
     if (search.district)
       results = results.filter((c) => c.district === search.district);
     if (search.fuel)
