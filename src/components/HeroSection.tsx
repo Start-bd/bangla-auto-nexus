@@ -77,8 +77,7 @@ export function HeroSection() {
   const [priceMax, setPriceMax] = useState("");
   const [district, setDistrict] = useState("");
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSearch = () => {
     navigate({
       to: "/cars",
       search: {
@@ -140,7 +139,7 @@ export function HeroSection() {
           {/* Search form */}
           <div className="rounded-b-lg border border-border bg-card p-4 md:p-6">
             {activeTab === "buy" && (
-              <form className="space-y-3" onSubmit={handleSearch}>
+              <div className="space-y-3">
                 <div className="grid gap-3 md:grid-cols-3">
                   <SelectField
                     label="গাড়ির ধরন ▾"
@@ -181,10 +180,10 @@ export function HeroSection() {
                     onChange={setDistrict}
                   />
                 </div>
-                <Button type="submit" variant="hero" size="xl" className="w-full">
+                <Button type="button" variant="hero" size="xl" className="w-full" onClick={handleSearch}>
                   <Search size={18} /> গাড়ি খুঁজুন
                 </Button>
-              </form>
+              </div>
             )}
 
 
