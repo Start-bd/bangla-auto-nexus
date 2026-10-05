@@ -39,6 +39,20 @@ const carsSearchSchema = z.object({
   q: fallback(z.string(), "").default(""),
 });
 
+function CarsErrorComponent() {
+  const router = useRouter();
+  return (
+    <div className="flex min-h-[60vh] flex-col items-center justify-center text-center px-4">
+      <Car size={48} className="mb-4 text-muted-foreground/40" />
+      <h1 className="font-display text-2xl font-bold text-foreground">সমস্যা হয়েছে</h1>
+      <p className="mt-2 text-sm text-muted-foreground font-bengali">গাড়ির তালিকা লোড করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।</p>
+      <Button variant="racing" size="sm" className="mt-4 font-bengali" onClick={() => router.invalidate()}>
+        আবার চেষ্টা করুন
+      </Button>
+    </div>
+  );
+}
+
 export const Route = createFileRoute("/cars/")({
   validateSearch: zodValidator(carsSearchSchema),
   loader: () => fetchCarListings(),
@@ -61,19 +75,7 @@ export const Route = createFileRoute("/cars/")({
     links: [{ rel: "canonical", href: PAGE_SEO.cars.canonical }],
   }),
   component: CarsPage,
-  errorComponent: ({ error }) => {
-    const router = useRouter();
-    return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center text-center px-4">
-        <Car size={48} className="mb-4 text-muted-foreground/40" />
-        <h1 className="font-display text-2xl font-bold text-foreground">সমস্যা হয়েছে</h1>
-        <p className="mt-2 text-sm text-muted-foreground font-bengali">গাড়ির তালিকা লোড করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।</p>
-        <Button variant="racing" size="sm" className="mt-4 font-bengali" onClick={() => router.invalidate()}>
-          আবার চেষ্টা করুন
-        </Button>
-      </div>
-    );
-  },
+  errorComponent: CarsErrorComponent,
 });
 
 const CONDITIONS = [

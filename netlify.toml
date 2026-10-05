@@ -1,0 +1,22 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[dev]
+  command = "npm run dev"
+  # `netlify dev` proxies to the framework dev server. This template's Vite
+  # config starts on 8080 (Lovable sandbox port convention), not the 3000
+  # Netlify assumes by default — without this, `netlify dev` times out
+  # waiting for port 3000.
+  targetPort = 8080
+  port = 8899
+
+
+# Nitro emits the SSR function into .netlify/functions-internal; Netlify picks
+# it up automatically. `dist` is the publish dir for THIS setup — Netlify's
+# generic TanStack docs say `dist/client`, but the Lovable/Nitro wrapper here
+# writes static assets straight to `dist` (verified: dist/_headers,
+# dist/assets, publicDir="../../dist" in .netlify/functions-internal/nitro.json).

@@ -122,7 +122,7 @@ export const fetchCarBySlug = createServerFn({ method: "GET" })
   });
 
 const similarCarsInput = z.object({
-  brand: z.string().min(1).max(100).regex(/^[a-zA-Z0-9\s\-]+$/),
+  brand: z.string().min(1).max(100).regex(/^[a-zA-Z0-9\s-]+$/),
   priceBdt: z.number().min(0).max(999999999),
   excludeId: z.string().min(1).max(100),
 });

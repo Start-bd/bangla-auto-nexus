@@ -7,6 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Environment / secrets — never commit real credentials.
+# The anon/publishable Supabase key is safe to ship to browsers, but the
+# service_role key bypasses RLS entirely and must stay local / CI-only.
+.env
+.env.*
+!.env.example
+
+# Build output
 node_modules
 dist
 dist-ssr
@@ -14,7 +22,9 @@ dist-ssr
 .vinxi
 .tanstack/**
 .nitro
+.netlify
 *.local
+deno.lock
 
 # Wrangler / Cloudflare
 .wrangler/
@@ -30,3 +40,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
